@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AutoMart</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="default_web_client_id">26142509723-g44kd3f2us4ovb3kt121849ph6bc6sen.apps.googleusercontent.com</string>
+    <string name="automart_softlyrex">2026 © AutoMart | SoftLyrex</string>
+</resources>

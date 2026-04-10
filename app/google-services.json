@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "26142509723",
+    "project_id": "automart-d3e92",
+    "storage_bucket": "automart-d3e92.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26142509723:android:3242635d6935d1f810943e",
+        "android_client_info": {
+          "package_name": "com.shehan.automart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26142509723-kod88suq9a3evb4mcbf4uf1ebq1p81aa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shehan.automart",
+            "certificate_hash": "35e5396f1d2af030800cb2832f4130ecf306ad91"
+          }
+        },
+        {
+          "client_id": "26142509723-g44kd3f2us4ovb3kt121849ph6bc6sen.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDahym5vqvXDZ3r8qBNqpBDKxoHIvRc_yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26142509723-g44kd3f2us4ovb3kt121849ph6bc6sen.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

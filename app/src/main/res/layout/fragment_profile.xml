@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.ProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/order_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="top|start"
+            android:background="?android:attr/windowBackground"
+            android:elevation="2dp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:rippleColor="#F5F5F5">
+
+            <ImageButton
+                android:id="@+id/profile_back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/rounder_background"
+                android:backgroundTint="#ffffff"
+                android:elevation="8dp"
+                android:padding="5dp"
+                android:src="@drawable/arrow_back_24px"
+                app:rippleColor="#F5F5F5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:text="Profile"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="8dp"
+                android:padding="10dp"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:id="@+id/profile_camera_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="100dp"
+                    android:background="@drawable/profile_camera_image_background"
+                    android:clickable="true"
+                    android:elevation="10dp"
+                    android:padding="5dp"
+                    android:pointerIcon="hand"
+                    android:src="@drawable/photo_camera_24px"
+                    app:rippleColor="#F5F5F5"
+                    app:tint="#ffffff" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/ic_launcher_background"
+                    android:clipToOutline="false"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/md_theme_primary"
+                        android:elevation="8dp"
+                        android:padding="2dp"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/CircleImage"
+                        app:strokeColor="@android:color/white"
+                        app:strokeWidth="4dp"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/profile_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:text="Shehan Sandaruwan"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/alternate_email_24px"
+                            app:tint="@color/md_theme_onSurfaceVariant" />
+
+                        <TextView
+                            android:id="@+id/profile_email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:textColor="@color/md_theme_onSurfaceVariant"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/phone_enabled_24px"
+                            app:tint="@color/md_theme_onSurfaceVariant" />
+
+                        <TextView
+                            android:id="@+id/profile_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:textColor="@color/md_theme_onSurfaceVariant"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+
+                    <!--                    <com.google.android.material.button.MaterialButton-->
+                    <!--                        android:id="@+id/profile_edit_btn"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_gravity="center"-->
+                    <!--                        android:layout_marginTop="10dp"-->
+                    <!--                        android:text="Edit Profile" />-->
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="14dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!--            profile card-->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:clipToOutline="false"
+                android:padding="16dp"
+                app:cardBackgroundColor="@color/ic_launcher_background"
+                app:cardElevation="2dp"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/profile_edit_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="10dp"
+                        android:clickable="true"
+                        android:drawableStart="@drawable/frame_person_24px"
+                        android:drawableEnd="@drawable/edit_24px"
+                        android:drawablePadding="10dp"
+                        android:padding="10dp"
+                        android:text="Edit Profile"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/md_theme_primary" />
+
+                    <LinearLayout
+                        android:id="@+id/profile_edit_profile_form"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:padding="16dp">
+
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="personal information"
+                            android:textAllCaps="true"
+                            android:textColor="@color/md_theme_primary"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/profile_edit_profile_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/search_bar_background"
+                            android:hint="Name" />
+
+                        <!--                        <com.google.android.material.textfield.TextInputEditText-->
+                        <!--                            android:id="@+id/profile_edit_profile_name"-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginTop="10dp"-->
+                        <!--                            android:background="@drawable/search_bar_background"-->
+                        <!--                            android:hint="Email Address" />-->
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/profile_edit_profile_mobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/search_bar_background"
+                            android:hint="Mobile number" />
+
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/profile_edit_save"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="Save Changes" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!--            location card-->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/profile_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:padding="16dp"
+                app:cardBackgroundColor="@color/ic_launcher_background"
+                app:cardElevation="2dp"
+                app:strokeWidth="1dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="10dp"
+                    android:drawableStart="@drawable/location_on_24px"
+                    android:drawableEnd="@drawable/edit_24px"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:text="Edit Location"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!--            payment card-->
+            <!--            <com.google.android.material.card.MaterialCardView-->
+            <!--                android:id="@+id/profile_edit_payment"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:elevation="2dp"-->
+            <!--                android:padding="16dp"-->
+            <!--                app:cardBackgroundColor="@color/ic_launcher_background"-->
+            <!--                app:cardElevation="2dp"-->
+            <!--                app:strokeWidth="1dp">-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_gravity="center"-->
+            <!--                    android:layout_marginVertical="10dp"-->
+            <!--                    android:drawableStart="@drawable/credit_card_24px"-->
+            <!--                    android:drawableEnd="@drawable/edit_24px"-->
+            <!--                    android:drawablePadding="10dp"-->
+            <!--                    android:padding="10dp"-->
+            <!--                    android:text="Edit Payment Method"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    android:textStyle="bold" />-->
+            <!--            </com.google.android.material.card.MaterialCardView>-->
+
+            <!--            logout card-->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/profile_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:padding="16dp"
+                app:cardBackgroundColor="@color/ic_launcher_background"
+                app:cardElevation="2dp"
+                app:strokeWidth="1dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="10dp"
+                    android:drawableStart="@drawable/logout_24px"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:text="Logout"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

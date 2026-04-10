@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.CheckoutFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:background="?android:attr/windowBackground"
+        android:padding="8dp"
+        app:rippleColor="#F5F5F5">
+
+        <ImageButton
+            android:id="@+id/checkout_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/rounder_background"
+            android:backgroundTint="#ffffff"
+            android:elevation="8dp"
+            android:padding="5dp"
+            android:src="@drawable/arrow_back_24px"
+            app:rippleColor="#F5F5F5" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:text="CHECKOUT"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!--                location area-->
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:drawableStart="@drawable/location_on_24px"
+                android:drawablePadding="10dp"
+                android:drawableTint="#2563eb"
+                android:text="Location"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/checkout_location_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/checkoutLocationHomeName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text=""
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/checkout_shipping_arrow_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/keyboard_arrow_down_24px" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/checkout_location_card_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="40dp"
+                        android:background="@color/md_theme_surfaceVariant" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/checkout_location_letter"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/md_theme_surfaceContainer"
+                            android:padding="10dp"
+                            android:text=""
+                            android:textAlignment="center" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/checkout_location_address"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textSize="14sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/checkout_location_change_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Change"
+                            android:textAlignment="textEnd" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!--                order summary area-->
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:drawableStart="@drawable/shopping_basket_24px"
+                android:drawablePadding="10dp"
+                android:drawableTint="#d97706"
+                android:text="Order Summary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/checkout_summary_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/checkout_item_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text=""
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/checkout_summary_arrow_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/keyboard_arrow_down_24px" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/checkout_summary_card_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/md_theme_surfaceVariant" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!--                special instruction-->
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:drawableStart="@drawable/psychiatry_24px"
+                android:drawablePadding="10dp"
+                android:drawableTint="#059669"
+                android:text="Special Instructions"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="e.g. Add Your Notes..."
+                app:boxBackgroundColor="@color/md_theme_surface"
+                app:boxStrokeColor="@color/md_theme_surfaceVariant">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/checkout_special_instructions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:minLines="3"
+                    android:scrollbars="vertical" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="20dp"
+                android:background="@color/md_theme_surfaceVariant" />
+
+            <!--                subtotal-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Subtotal"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/checkout_subtotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!--                picked_up fee-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delivery Fee"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/checkout_shipping_fee"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!--                total-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/checkout_total"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <!--            payment method-->
+            <!--            <com.google.android.material.textview.MaterialTextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="5dp"-->
+            <!--                android:drawableStart="@drawable/credit_card_24px"-->
+            <!--                android:drawablePadding="10dp"-->
+            <!--                android:drawableTint="#2563eb"-->
+            <!--                android:text="Payment method"-->
+            <!--                android:textSize="18sp"-->
+            <!--                android:textStyle="bold" />-->
+            <!--            <com.google.android.material.card.MaterialCardView-->
+            <!--                android:id="@+id/checkout_location_card"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content">-->
+
+            <!--                <RelativeLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:padding="16dp">-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/checkout_location_home_name"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:drawableEnd="@drawable/keyboard_arrow_down_24px"-->
+            <!--                        android:text="Sam's Place"-->
+            <!--                        android:textSize="16sp" />-->
+            <!--                </RelativeLayout>-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="vertical"-->
+            <!--                    android:padding="16dp">-->
+
+            <!--                    <View-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="1dp"-->
+            <!--                        android:layout_marginTop="40dp"-->
+            <!--                        android:background="@color/md_theme_surfaceVariant" />-->
+
+            <!--                    <LinearLayout-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:orientation="horizontal">-->
+
+            <!--                        <com.google.android.material.textview.MaterialTextView-->
+            <!--                            android:layout_width="40dp"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_marginTop="10dp"-->
+            <!--                            android:background="@color/md_theme_surfaceContainer"-->
+            <!--                            android:padding="10dp"-->
+            <!--                            android:id="@+id/checkout_location_letter"-->
+            <!--                            android:text="S"-->
+            <!--                            android:textAlignment="center" />-->
+
+            <!--                        <com.google.android.material.textview.MaterialTextView-->
+            <!--                            android:layout_width="0dp"-->
+            <!--                            android:id="@+id/checkout_location_address"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_marginStart="5dp"-->
+
+            <!--                            android:layout_marginTop="10dp"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:text="Maple Street, Colombo"-->
+            <!--                            android:textSize="14sp" />-->
+
+            <!--                        <com.google.android.material.button.MaterialButton-->
+            <!--                            android:layout_width="wrap_content"-->
+            <!--                            android:id="@+id/checkout_location_change_btn"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_marginTop="10dp"-->
+            <!--                            android:text="Change"-->
+            <!--                            android:textAlignment="textEnd" />-->
+
+            <!--                    </LinearLayout>-->
+
+            <!--                </LinearLayout>-->
+            <!--            </com.google.android.material.card.MaterialCardView>-->
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!--                checkout btn-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/md_theme_surfaceContainer"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:rippleColor="#F5F5F5">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/checkout_place_order_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Place Order"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

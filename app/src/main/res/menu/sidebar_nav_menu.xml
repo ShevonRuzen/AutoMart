@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/main_functions"
+        android:checkableBehavior="single">
+        <item
+            android:icon="@drawable/home_24px"
+            android:title="Home"
+            android:visible="true"
+            android:checkable="true"
+            android:id="@+id/side_nav_home"/>
+
+        <item
+            android:icon="@drawable/order_24px"
+            android:title="Orders"
+            android:visible="false"
+            android:checkable="true"
+            android:id="@+id/side_nav_order"/>
+
+        <item
+            android:icon="@drawable/shopping_basket_24px"
+            android:title="Cart"
+            android:visible="false"
+            android:checkable="true"
+            android:id="@+id/side_nav_cart"/>
+        <item
+            android:icon="@drawable/favorite_24px"
+            android:title="Favorites"
+            android:visible="false"
+            android:checkable="true"
+            android:id="@+id/side_nav_favorite"/>
+        <item
+            android:icon="@drawable/notifications_24px"
+            android:title="Notification"
+            android:visible="false"
+            android:checkable="true"
+            android:id="@+id/side_nav_notification"/>
+
+        <item
+            android:icon="@drawable/account_24px"
+            android:title="Profile"
+            android:visible="false"
+            android:checkable="true"
+            android:id="@+id/side_nav_profile"/>
+
+        <item
+            android:icon="@drawable/info_24px"
+            android:title="About"
+            android:visible="true"
+            android:checkable="true"
+            android:id="@+id/side_nav_about"/>
+        <item
+            android:icon="@drawable/settings_24px"
+            android:title="Setting"
+            android:visible="true"
+            android:checkable="true"
+            android:id="@+id/side_nav_setting"/>
+    </group>
+
+    <group android:id="@+id/login_function"
+        android:checkableBehavior="single">
+        <item
+            android:icon="@drawable/login_24px"
+            android:title="Login"
+            android:visible="true"
+            android:checkable="true"
+            android:id="@+id/side_nav_login"/>
+        <item
+            android:icon="@drawable/logout_24px"
+            android:title="Logout"
+            android:visible="false"
+            android:checkable="true"
+            android:id="@+id/side_nav_logout"/>
+    </group>
+</menu>
