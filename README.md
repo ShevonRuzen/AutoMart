@@ -222,6 +222,7 @@ Specify project license here (e.g., MIT). If you don't want to include a license
 
 ## Contact
 
-For questions, reach out to the repository owner or the original author present in the project files. Shehan +94766940120
+For questions, reach out to the repository owner or the original author present in the project files. 
+Shehan +94766940120
 
 
