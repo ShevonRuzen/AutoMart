@@ -22,9 +22,14 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.shehan.automart.R;
 import com.shehan.automart.databinding.ActivityMainBinding;
 import com.shehan.automart.fragment.AboutFragment;
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(binding.getRoot());
 
         createNotificationChannel();
+        requestNotificationPermission();
 
 
         this.toolbar = binding.homeToolbar;
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity
 
 //        loadAddress();
         updateSideNavVisibility();
+        updateFCMToken();
 
     }
 
@@ -186,32 +193,32 @@ public class MainActivity extends AppCompatActivity
             binding.notificationBadgeContainer.setVisibility(View.GONE);
             return;
         }
-        coutn = 0;
         db.collection("notifications")
                 .whereEqualTo("user_doc_id", currentUser.getUid())
-                .get()
-                .addOnSuccessListener(qds -> {
-                    if (qds == null || qds.isEmpty()) {
+                .addSnapshotListener((qds, error) -> {
+                    if (error != null || qds == null || qds.isEmpty()) {
                         binding.notificationBadgeContainer.setVisibility(View.GONE);
+                        return;
                     }
 
-                    binding.notificationCount.setVisibility(View.VISIBLE);
+                    int unreadCount = 0;
+                    List<Notification> list = qds.toObjects(Notification.class);
 
-                    if (qds.size() == 0) {
+                    for (Notification notification : list) {
+                        if (!notification.isRead()) {
+                            unreadCount++;
+                        }
+                    }
+
+                    if (unreadCount == 0) {
                         binding.notificationBadgeContainer.setVisibility(View.GONE);
                     } else {
-                        List<Notification> list = qds.toObjects(Notification.class);
-
-                        list.forEach(notification -> {
-                            if (!notification.isRead()) {
-                                coutn++;
-                            }
-                        });
-
-                        if (coutn > 10) {
+                        binding.notificationBadgeContainer.setVisibility(View.VISIBLE);
+                        binding.notificationCount.setVisibility(View.VISIBLE);
+                        if (unreadCount > 10) {
                             binding.notificationCount.setText("10+");
-                        } else if (coutn < 10) {
-                            binding.notificationCount.setText(String.valueOf(coutn));
+                        } else {
+                            binding.notificationCount.setText(String.valueOf(unreadCount));
                         }
                     }
                 });
@@ -309,6 +316,27 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         updateSideNavVisibility();
+        updateFCMToken();
 //        loadAddress();
+    }
+
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        }
+    }
+
+    private void updateFCMToken() {
+        if (currentUser == null) return;
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                String token = task.getResult();
+                db.collection("user").document(currentUser.getUid())
+                        .update("fcm_token", token);
+            }
+        });
     }
 }

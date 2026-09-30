@@ -531,24 +531,25 @@ public class CheckoutFragment extends Fragment {
     private void saveOrder(StatusResponse statusResponse) {
         // add order
         try {
-            Order order = null;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                order = Order.builder().user_doc_id(currentUser.getUid())
-                        .created_date(Timestamp.now())
-                        .notes(!binding.checkoutSpecialInstructions.getText().isEmpty() ?
-                                binding.checkoutSpecialInstructions.getText().toString() : "")
-                        .order_id(orderId)
-                        .payment_status("PAID")
-                        .order_status("PENDING")
-                        .address_home(currentUserAddress.getHome_name())
-                        .address_city(currentUserAddress.getCity())
-                        .address_line_1(currentUserAddress.getAddress_line1())
-                        .address_line_2(currentUserAddress.getAddress_line2())
-                        .address_postal_code(currentUserAddress.getPostal_code())
-                        .total_amount(subtotal + shippingFee)
-                        .shipping_fee(currentUserAddress.getShippingFee() != 0 ? currentUserAddress.getShippingFee():100)
-                        .build();
+            String notes = "";
+            if (binding != null && binding.checkoutSpecialInstructions.getText() != null) {
+                notes = binding.checkoutSpecialInstructions.getText().toString().trim();
             }
+
+            Order order = Order.builder().user_doc_id(currentUser.getUid())
+                    .created_date(Timestamp.now())
+                    .notes(notes)
+                    .order_id(orderId)
+                    .payment_status("PAID")
+                    .order_status("PENDING")
+                    .address_home(currentUserAddress != null ? currentUserAddress.getHome_name() : "")
+                    .address_city(currentUserAddress != null ? currentUserAddress.getCity() : "")
+                    .address_line_1(currentUserAddress != null ? currentUserAddress.getAddress_line1() : "")
+                    .address_line_2(currentUserAddress != null ? currentUserAddress.getAddress_line2() : "")
+                    .address_postal_code(currentUserAddress != null ? currentUserAddress.getPostal_code() : "")
+                    .total_amount(subtotal + shippingFee)
+                    .shipping_fee(currentUserAddress != null && currentUserAddress.getShippingFee() != 0 ? currentUserAddress.getShippingFee() : 100)
+                    .build();
 
             db.collection("order").add(order).addOnSuccessListener(dr -> {
                 if (dr == null) return;

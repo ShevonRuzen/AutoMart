@@ -3,12 +3,16 @@ package com.shehan.automart.fragment;
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +26,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import java.security.MessageDigest;
+import com.shehan.automart.BuildConfig;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -460,32 +467,40 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         String origin = start.latitude + "," + start.longitude;
         String destination = end.latitude + "," + end.longitude;
 
-        String key = "AIzaSyAIRQHhy8GudAiWtvpeYKM3BZFmA6eeO8w";
+        String key = BuildConfig.MAPS_API_KEY;
+        if (key == null || key.trim().isEmpty()) {
+            key = "AIzaSyAIRQHhy8GudAiWtvpeYKM3BZFmA6eeO8w";
+        }
+
+        String packageName = requireContext().getPackageName();
+        String certSha1 = getSigningCertificateSHA1();
 
         DirectionApi api = RetrofitClient.getClient().create(DirectionApi.class);
 
-        api.getJson(origin, destination, key).enqueue(new Callback<JsonObject>() {
+        api.getJson(origin, destination, key, packageName, certSha1).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (!isAdded() || binding == null) return;
 
                 if (!response.isSuccessful() || response.body() == null) {
-                    Toast.makeText(requireContext(), "Failed to get directions", Toast.LENGTH_SHORT).show();
+                    fallbackRouteAndFee(start, end);
                     return;
                 }
 
                 try {
                     JsonObject body = response.body();
 
-                    String status = body.get("status").getAsString();
+                    String status = body.has("status") ? body.get("status").getAsString() : "UNKNOWN";
                     if (!"OK".equals(status)) {
-                        Toast.makeText(requireContext(), "Directions API error: " + status, Toast.LENGTH_SHORT).show();
+                        String errorMsg = body.has("error_message") ? body.get("error_message").getAsString() : status;
+                        Log.w("DirectionsAPI", "Directions API returned " + status + ": " + errorMsg);
+                        fallbackRouteAndFee(start, end);
                         return;
                     }
 
                     JsonArray routes = body.getAsJsonArray("routes");
                     if (routes == null || routes.size() == 0) {
-                        Toast.makeText(requireContext(), "No route found", Toast.LENGTH_SHORT).show();
+                        fallbackRouteAndFee(start, end);
                         return;
                     }
 
@@ -532,21 +547,99 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
                     Toast.makeText(
                             requireContext(),
-                            "Distance: " + distanceText + "\nDuration: " + durationText + "\nFee: LKR " + shippingFee,
+                            "Distance: " + distanceText + "\nDuration: " + durationText + "\nFee: LKR " + (int) shippingFee,
                             Toast.LENGTH_LONG
                     ).show();
 
                 } catch (Exception e) {
-                    Toast.makeText(requireContext(), "Error parsing direction data", Toast.LENGTH_SHORT).show();
+                    Log.e("DirectionsAPI", "Error parsing direction data", e);
+                    fallbackRouteAndFee(start, end);
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 if (!isAdded() || binding == null) return;
-                Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("DirectionsAPI", "Directions API network error", t);
+                fallbackRouteAndFee(start, end);
             }
         });
+    }
+
+    private void fallbackRouteAndFee(LatLng start, LatLng end) {
+        if (!isAdded() || binding == null || getContext() == null) return;
+
+        float[] results = new float[1];
+        android.location.Location.distanceBetween(start.latitude, start.longitude, end.latitude, end.longitude, results);
+        double distanceKm = results[0] / 1000.0;
+        shippingFee = Math.max(100, Math.ceil(distanceKm) * 100);
+
+        if (polyline != null) {
+            polyline.remove();
+        }
+
+        PolylineOptions polylineOptions = new PolylineOptions()
+                .width(15)
+                .color(ContextCompat.getColor(requireContext(), R.color.colorCustomColor1))
+                .add(start, end);
+
+        if (mMap != null) {
+            polyline = mMap.addPolyline(polylineOptions);
+        }
+
+        String distanceText = String.format(Locale.US, "%.1f km", distanceKm);
+        Toast.makeText(
+                requireContext(),
+                "Location selected.\nDistance: " + distanceText + "\nDelivery Fee: LKR " + (int) shippingFee,
+                Toast.LENGTH_LONG
+        ).show();
+    }
+
+    private String getSigningCertificateSHA1() {
+        try {
+            Context context = getContext();
+            if (context == null) return null;
+            PackageInfo packageInfo;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                packageInfo = context.getPackageManager().getPackageInfo(
+                        context.getPackageName(),
+                        PackageManager.GET_SIGNING_CERTIFICATES
+                );
+                if (packageInfo.signingInfo != null) {
+                    Signature[] signatures = packageInfo.signingInfo.getApkContentsSigners();
+                    if (signatures != null && signatures.length > 0) {
+                        return getSHA1FromSignature(signatures[0]);
+                    }
+                }
+            } else {
+                packageInfo = context.getPackageManager().getPackageInfo(
+                        context.getPackageName(),
+                        PackageManager.GET_SIGNATURES
+                );
+                if (packageInfo.signatures != null && packageInfo.signatures.length > 0) {
+                    return getSHA1FromSignature(packageInfo.signatures[0]);
+                }
+            }
+        } catch (Exception e) {
+            Log.e("AddressFragment", "Error getting SHA-1", e);
+        }
+        return null;
+    }
+
+    private String getSHA1FromSignature(Signature signature) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] digest = md.digest(signature.toByteArray());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : digest) {
+                String hex = Integer.toHexString(0xFF & b).toUpperCase(Locale.US);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 

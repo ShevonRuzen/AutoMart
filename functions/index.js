@@ -57,6 +57,13 @@ exports.orderStatusChanged = onDocumentUpdated("order/{orderId}", async (event) 
       title: "Order Status Updated",
       body: message,
     },
+    android: {
+      priority: "high",
+      notification: {
+        channelId: "order_status_channel",
+        sound: "default",
+      },
+    },
     data: {
       order_doc_id: event.params.orderId,
       status: newStatus,

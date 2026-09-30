@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.shehan.automart.databinding.ActivitySignUpBinding;
 import com.shehan.automart.model.User;
 
@@ -110,25 +111,24 @@ public class SignUpActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     String uid = task.getResult().getUser().getUid().toString();
 
-                    User user = User.builder()
-                            .id(uid)
-                            .name(name)
-                            .email(email)
-                            .phoneNumber(mobile)
-                            .build();
+                    FirebaseMessaging.getInstance().getToken().addOnCompleteListener(tokenTask -> {
+                        String token = tokenTask.isSuccessful() ? tokenTask.getResult() : null;
 
-                    db.collection("user").document(uid).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
+                        User user = User.builder()
+                                .id(uid)
+                                .name(name)
+                                .email(email)
+                                .phoneNumber(mobile)
+                                .fcm_token(token)
+                                .build();
+
+                        db.collection("user").document(uid).set(user).addOnSuccessListener(unused -> {
                             FirebaseUser currentUser = mAuth.getCurrentUser();
                             updateUI(currentUser);
                             Toast.makeText(SignUpActivity.this, "Sign Up Successful!", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+                        }).addOnFailureListener(e -> {
                             Toast.makeText(SignUpActivity.this, "Sign Up Failed!", Toast.LENGTH_SHORT).show();
-                        }
+                        });
                     });
 
                 }else{
